@@ -1,0 +1,14 @@
+!CPU
+OR[Core amount]
+1
+2
+3
+4
+5
+OR[Producer]
+Intel
+AMD
+OR[frequency]
+500
+600
+700
