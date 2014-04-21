@@ -29,8 +29,7 @@ List<T>::List(Elem<T>* e){
 }
 template <class T>
 List<T>::~List(){
-	delete(head);
-	this->head = null;
+	head = 0;
 }
 template <class T>
 Elem<T>* List<T>::getHead(){
@@ -79,7 +78,7 @@ Elem<T>* List<T>::getElem(int i){
 }
 template <class T>
 bool List<T>::isEmpty(){
-	return (head == null);
+	return (head == 0);
 }
 template <class T>
 int List<T>::size(){

@@ -24,7 +24,7 @@ Elem<T>::Elem(T value, Elem<T>* next){
 
 template <class T>
 Elem<T>::~Elem(){
-	delete[] value;
+	delete[] next;
 }
 template <class T>
 T Elem<T>::getValue(){

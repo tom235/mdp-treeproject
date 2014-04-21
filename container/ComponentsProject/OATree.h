@@ -20,6 +20,7 @@ public:
 	void setElems(List<OATree<T>>*);
 	void setIsOr(bool);
 	void setValue(T);
+	bool containsValue(T prop,T value);
 };
 
 template <class T>
@@ -37,7 +38,8 @@ OATree<T>::OATree(T value, bool or, List<OATree>* elems){
 
 template <class T>
 OATree<T>::~OATree(){
-
+	delete elems;
+	elems = 0;
 }
 // getters
 template <class T>
@@ -69,4 +71,38 @@ void OATree<T>::setIsOr(bool or){
 template <class T>
 void OATree<T>::setValue(T value){
 	this->value = value;
+}
+
+template <class T>
+bool OATree<T>::containsValue(T prop,T value)
+{
+	if (this->elems == 0) return false;
+	if (prop == this->getValue())
+	{
+		
+		Elem<OATree<string>>* iterator = this->elems->getHead();
+		
+		while (iterator != 0)
+		{
+			
+			if (iterator->getValue().getValue() == value) return true;
+			iterator = iterator->getNext();
+		}
+		return false;
+		
+	}
+	else
+	{
+		Elem<OATree<string>>* iterator = this->elems->getHead();
+		
+		while (iterator != 0)
+		{
+
+			bool b = iterator->getValue().containsValue(prop, value);
+			if (b) return true;
+			iterator = iterator->getNext();
+		}
+		return false;
+	}
+	
 }
