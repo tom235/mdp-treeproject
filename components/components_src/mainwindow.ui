@@ -28,7 +28,7 @@
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>Работа</string>
+      <string>Редактирование</string>
      </attribute>
      <widget class="QPushButton" name="pushButton">
       <property name="geometry">
@@ -125,7 +125,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Дерево комплектующих</string>
+       <string>Список комплектующих</string>
       </property>
      </widget>
      <widget class="QGroupBox" name="groupBox1">
@@ -145,22 +145,12 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>81</width>
+         <width>111</width>
          <height>16</height>
         </rect>
        </property>
        <property name="text">
-        <string>Изображение:</string>
-       </property>
-      </widget>
-      <widget class="QGraphicsView" name="graphicsView">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>50</y>
-         <width>341</width>
-         <height>191</height>
-        </rect>
+        <string>Список параметров:</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_4">
@@ -199,11 +189,21 @@
         </rect>
        </property>
       </widget>
+      <widget class="QListView" name="listView_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>341</width>
+         <height>201</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
-      <string>Редактирование</string>
+      <string>Поиск</string>
      </attribute>
      <widget class="QLabel" name="label_6">
       <property name="geometry">
@@ -238,7 +238,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Дерево комплектующих</string>
+       <string>Список комплектующих</string>
       </property>
      </widget>
      <widget class="QListView" name="listView_2">

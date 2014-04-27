@@ -15,23 +15,23 @@ class ComponentOutIn
 {
 public:
 	
-	static void writeComponents(std::vector<Ram> rams, std::vector<VideoCard> videoCards, std::vector<MotherBoard> mrBorads, std::vector<Cpu> cpus, std::string fileName);
-	static void readComponents(std::vector<Ram>& rams, std::vector<VideoCard>& videoCards, std::vector<MotherBoard>& mrBorads, std::vector<Cpu>& cpus, std::string fileName);
+    static void writeComponents(std::vector<Ram> rams, std::vector<VideoCard> videoCards, std::vector<MotherBoard> mrBorads, std::vector<Cpu> cpus, const char* fileName);
+    static void readComponents(std::vector<Ram>& rams, std::vector<VideoCard>& videoCards, std::vector<MotherBoard>& mrBorads, std::vector<Cpu>& cpus, const char* fileName);
 
 };
 
-void ComponentOutIn::readComponents(std::vector<Ram>& rams, std::vector<VideoCard>& videoCards, std::vector<MotherBoard>& mrBorads, std::vector<Cpu>& cpus, std::string fileName)
+void ComponentOutIn::readComponents(std::vector<Ram>& rams, std::vector<VideoCard>& videoCards, std::vector<MotherBoard>& mrBorads, std::vector<Cpu>& cpus,const char* fileName)
 {
-	std::string vcStr = "VideoCard";
-	std::string cpuStr = "CPU";
-	std::string motherStr = "MotherBoard";
-	std::string ramStr = "RAM";
+    std::string vcStr = "VideoCard";
+    std::string cpuStr = "CPU";
+    std::string motherStr = "MotherBoard";
+    std::string ramStr = "RAM";
 
 	std::ifstream myfile(fileName);
 
 	if (myfile.is_open())
 	{
-		std::string str;
+        std::string str;
 		while (std::getline(myfile,str))
 		{
 			unsigned position = str.find(vcStr);
@@ -40,19 +40,19 @@ void ComponentOutIn::readComponents(std::vector<Ram>& rams, std::vector<VideoCar
 				int start = str.find(":");
 				int end = str.find(",");
 				int back = (end - 2) - start + 1;
-				std::string name = str.substr(start + 1, back);
+                std::string name = str.substr(start + 1, back);
 				start = str.find(":", end + 1);
 				end = str.find(",", end + 1);
 				back = (end - 2) - start + 1;
-				std::string producer = str.substr(start + 1, back);
+                std::string producer = str.substr(start + 1, back);
 				start = str.find(":", end + 1);
 				end = str.find(",", end + 1);
 				back = (end - 2) - start + 1;
-				std::string chipset = str.substr(start + 1, back);
+                std::string chipset = str.substr(start + 1, back);
 				start = str.find(":", end + 1);
 				end = str.find(",", end + 1);
 				back = (end - 2) - start + 1;
-				std::string ramStr = str.substr(start + 1, back);
+                std::string ramStr = str.substr(start + 1, back);
 				int ramAbount = atof(ramStr.c_str());
 
 				VideoCard video(name, producer, chipset, ramAbount);
@@ -66,20 +66,20 @@ void ComponentOutIn::readComponents(std::vector<Ram>& rams, std::vector<VideoCar
 				int start = str.find(":");
 				int end = str.find(",");
 				int back = (end - 2) - start + 1;
-				std::string name = str.substr(start + 1, back);
+                std::string name = str.substr(start + 1, back);
 				start = str.find(":", end + 1);
 				end = str.find(",", end + 1);
 				back = (end - 2) - start + 1;
-				std::string producer = str.substr(start + 1, back);
+                std::string producer = str.substr(start + 1, back);
 				start = str.find(":", end + 1);
 				end = str.find(",", end + 1);
 				back = (end - 2) - start + 1;
-				std::string coreStr = str.substr(start + 1, back);
+                std::string coreStr = str.substr(start + 1, back);
 				int coreAmount = atof(coreStr.c_str());
 				start = str.find(":", end + 1);
 				end = str.find(",", end + 1);
 				back = (end - 2) - start + 1;
-				std::string freqStr = str.substr(start + 1, back);
+                std::string freqStr = str.substr(start + 1, back);
 				float frequency = atof(freqStr.c_str());
 
 				Cpu cp(name, producer, frequency, coreAmount);
@@ -93,19 +93,19 @@ void ComponentOutIn::readComponents(std::vector<Ram>& rams, std::vector<VideoCar
 				int start = str.find(":");
 				int end = str.find(",");
 				int back = (end - 2) - start + 1;
-				std::string name = str.substr(start + 1, back);
+                std::string name = str.substr(start + 1, back);
 				start = str.find(":", end + 1);
 				end = str.find(",", end + 1);
 				back = (end - 2) - start + 1;
-				std::string producer = str.substr(start + 1, back);
+                std::string producer = str.substr(start + 1, back);
 				start = str.find(":", end + 1);
 				end = str.find(",", end + 1);
 				back = (end - 2) - start + 1;
-				std::string ramType = str.substr(start + 1, back);
+                std::string ramType = str.substr(start + 1, back);
 				start = str.find(":", end + 1);
 				end = str.find(",", end + 1);
 				back = (end - 2) - start + 1;
-				std::string maxAmountStr = str.substr(start + 1, back);
+                std::string maxAmountStr = str.substr(start + 1, back);
 				int maxAmount = atof(maxAmountStr.c_str());
 
 				MotherBoard mother(name, producer, ramType, maxAmount);
@@ -119,19 +119,19 @@ void ComponentOutIn::readComponents(std::vector<Ram>& rams, std::vector<VideoCar
 				int start = str.find(":");
 				int end = str.find(",");
 				int back = (end - 2) - start + 1;
-				std::string name = str.substr(start + 1, back);
+                std::string name = str.substr(start + 1, back);
 				start = str.find(":",end + 1);
 				end = str.find(",", end + 1);
-				back = (end - 2) - start + 1;
-				std::string producer = str.substr(start + 1, back);
+                back = (end - 2) - start + 1;
+                std::string producer = str.substr(start + 1, back);
 				start = str.find(":", end + 1);
 				end = str.find(",", end + 1);
 				back = (end - 2) - start + 1;
-				std::string type = str.substr(start + 1, back);
+                std::string type = str.substr(start + 1, back);
 				start = str.find(":", end + 1);
 				end = str.find(",", end + 1);
 				back = (end - 2) - start + 1;
-				std::string freqStr = str.substr(start + 1, back);
+                std::string freqStr = str.substr(start + 1, back);
 				float frequency = atof(freqStr.c_str());
 
 				Ram ram(name, producer, type, frequency);
@@ -145,7 +145,7 @@ void ComponentOutIn::readComponents(std::vector<Ram>& rams, std::vector<VideoCar
 
 }
 
-void ComponentOutIn::writeComponents(std::vector<Ram> rams, std::vector<VideoCard> videoCards, std::vector<MotherBoard> mrBorads, std::vector<Cpu> cpus, std::string fileName)
+void ComponentOutIn::writeComponents(std::vector<Ram> rams, std::vector<VideoCard> videoCards, std::vector<MotherBoard> mrBorads, std::vector<Cpu> cpus,const char* fileName)
 {
 
 	std::ofstream out(fileName);
