@@ -1,1 +1,3 @@
-
+# Qt Project
+build-*/
+*.pro.user
