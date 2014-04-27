@@ -1,0 +1,30 @@
+This manual contains the information about building and running
+the Components application.
+
+------------------- WARNING
+Building and running of this software were tested only with Qt 5.2.1 
+on the following platforms:
+  1. Windows 7 Enterprise 32-bit
+
+
+------------------- BUILDING & RUNNING
+
+---------- Windows
+  1. Download and install Qt Online Installer for Windows from official website: 
+    http://qt-project.org/downloads
+  2. Add the following values to the Path environment variable:
+    C:\Qt\5.2.1\mingw48_32\bin
+    C:\Qt\Tools\mingw48_32\bin
+  3. Run build.bat to build the program.
+  4. Run components_src.exe to run the program.
+
+------------------- CREATING INSTALLER
+
+---------- Windows
+
+  1. NSIS must be installed (http://nsis.sourceforge.net/Download)
+  2. Run package.bat (make sure that Qt-path in package.bat is correct). After that directory "package" will be created.
+  3. Generate installer using NSIS.
+    3.1. Right-click on "package.nsi" file
+    3.2. Compile NSIS Script
+  4. File "components-installer.exe" is the installer (Captain Obvious).

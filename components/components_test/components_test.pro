@@ -1,18 +1,20 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2014-04-27T15:45:55
+# Project created by QtCreator 2014-04-19T15:08:03
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += testlib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = components_test
-TEMPLATE = app
+CONFIG += testcase
 
+HEADERS += \
+    list_test.h \
+    ../components_src/container/Elem.h \
+    ../components_src/container/List.h
 
-SOURCES += main.cpp\
-
-
-
+SOURCES += \
+    main.cpp \
+    list_test.cpp
