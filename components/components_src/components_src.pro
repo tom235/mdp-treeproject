@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     container/Reader.cpp \
     container/VideoCard.cpp \
     container/Writer.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    adddialog.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -35,7 +36,9 @@ HEADERS  += mainwindow.h \
     container/VideoCard.h \
     container/Writer.h \
     mainwindow.h \
-    container/OATree.h
+    container/OATree.h \
+    adddialog.h
 
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    adddialog.ui
