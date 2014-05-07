@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     container/VideoCard.cpp \
     container/Writer.cpp \
     mainwindow.cpp \
-    adddialog.cpp
+    adddialog.cpp \
+    exception/FileFormatException.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -37,7 +38,9 @@ HEADERS  += mainwindow.h \
     container/Writer.h \
     mainwindow.h \
     container/OATree.h \
-    adddialog.h
+    adddialog.h \
+    exception/FileFormatException.h \
+    exception/Exception.h
 
 
 FORMS    += mainwindow.ui \

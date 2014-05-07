@@ -4,141 +4,106 @@
 #include <string>
 #include "Cpu.h"
 #include "MotherBoard.h"
+
 #include"VideoCard.h"
 #include "Ram.h"
+#include <stdlib.h>
+
 
 #include <iostream>
 #include <fstream>
-
+#include"exception/FileFormatException.h"
 
 class ComponentOutIn
 {
 public:
 	
     static void writeComponents(std::vector<Ram> rams, std::vector<VideoCard> videoCards, std::vector<MotherBoard> mrBorads, std::vector<Cpu> cpus, const char* fileName);
-    static void readComponents(std::vector<Ram>& rams, std::vector<VideoCard>& videoCards, std::vector<MotherBoard>& mrBorads, std::vector<Cpu>& cpus, const char* fileName);
+    static void readComponents(std::vector<Ram>& rams, std::vector<VideoCard>& videoCards, std::vector<MotherBoard>& mrBorads, std::vector<Cpu>& cpus, const char* fileName) throw(FileFormatException) ;
 
 };
 
-void ComponentOutIn::readComponents(std::vector<Ram>& rams, std::vector<VideoCard>& videoCards, std::vector<MotherBoard>& mrBorads, std::vector<Cpu>& cpus,const char* fileName)
+void ComponentOutIn::readComponents(std::vector<Ram>& rams, std::vector<VideoCard>& videoCards, std::vector<MotherBoard>& mrBorads, std::vector<Cpu>& cpus,const char* fileName) throw(FileFormatException)
 {
-    std::string vcStr = "VideoCard";
-    std::string cpuStr = "CPU";
-    std::string motherStr = "MotherBoard";
-    std::string ramStr = "RAM";
+    QRegExp motherRegex("^\\S{17}(\\w+)\\S{10}(\\w+)\\S{9}(\\w+\\d+)\\S{17}(\\d+)");
+    QRegExp ramRegex("^\\S{9}(\\w+)\\S{10}(\\w+)\\S{6}(\\w+\\d{0,10})\\S{11}([0-9]*(\\.[0-9]+)?)");
+    QRegExp cpuRegex("^\\S{9}(\\w+)\\S{10}(\\w+)\\S{12}(\\d{0,2})\\S{11}([0-9]*(\\.[0-9]+)?)");
+    QRegExp vcRegex("^\\S{15}(\\w+)\\S{10}(\\w+)\\S{9}(\\w+)\\S{5}(\\d+)");
+
 
 	std::ifstream myfile(fileName);
 
 	if (myfile.is_open())
 	{
         std::string str;
-		while (std::getline(myfile,str))
+        int lineCounter=0;
+        while (std::getline(myfile,str))
 		{
-			unsigned position = str.find(vcStr);
-			if (position >= 0 && position < str.length())
-			{
-				int start = str.find(":");
-				int end = str.find(",");
-				int back = (end - 2) - start + 1;
-                std::string name = str.substr(start + 1, back);
-				start = str.find(":", end + 1);
-				end = str.find(",", end + 1);
-				back = (end - 2) - start + 1;
-                std::string producer = str.substr(start + 1, back);
-				start = str.find(":", end + 1);
-				end = str.find(",", end + 1);
-				back = (end - 2) - start + 1;
-                std::string chipset = str.substr(start + 1, back);
-				start = str.find(":", end + 1);
-				end = str.find(",", end + 1);
-				back = (end - 2) - start + 1;
-                std::string ramStr = str.substr(start + 1, back);
-				int ramAbount = atof(ramStr.c_str());
+            int pos = motherRegex.indexIn(QString::fromStdString(str));
+            if(pos == 0){
+                QString name = motherRegex.cap(1).trimmed();
+                QString pr = motherRegex.cap(2).trimmed();
+                QString type = motherRegex.cap(3).trimmed();
+                int amount = motherRegex.cap(4).toInt();
+                std::cout << name.toStdString() << "\n";
+                std::cout << pr.toStdString() << "\n";
+                std::cout << type.toStdString() << "\n";
+                std::cout <<  amount<< "\n";
+                MotherBoard mother(name.toStdString(),pr.toStdString(),type.toStdString(),amount);
+                lineCounter++;
+                mrBorads.push_back(mother);
+                continue;
+            }
+            pos = ramRegex.indexIn(QString::fromStdString(str));
+            if(pos == 0){
+                QString name = ramRegex.cap(1).trimmed();
+                QString pr = ramRegex.cap(2).trimmed();
+                QString type = ramRegex.cap(3).trimmed();
+                float freq = ramRegex.cap(4).toFloat();
+                std::cout << name.toStdString() << "\n";
+                std::cout << pr.toStdString() << "\n";
+                std::cout << type.toStdString() << "\n";
+                std::cout <<  ramRegex.cap(4).toFloat()<< "\n";
 
-				VideoCard video(name, producer, chipset, ramAbount);
-				videoCards.push_back(video);
+                Ram ram(name.toStdString(),pr.toStdString(),type.toStdString(),freq);
+                lineCounter++;
+                rams.push_back(ram);
+                continue;
+            }
+            pos = vcRegex.indexIn(QString::fromStdString(str));
+            if(pos == 0){
+                QString name = vcRegex.cap(1).trimmed();
+                QString pr = vcRegex.cap(2).trimmed();
+                QString chipset = vcRegex.cap(3);
+                int ram = vcRegex.cap(4).toFloat();
+                std::cout << name.toStdString() << "\n";
+                std::cout << pr.toStdString() << "\n";
+                std::cout << chipset.toStdString() << "\n";
+                std::cout <<  ram<< "\n";
 
-				continue;
-			}
-			position = str.find(cpuStr);
-			if (position >= 0 && position < str.length())
-			{
-				int start = str.find(":");
-				int end = str.find(",");
-				int back = (end - 2) - start + 1;
-                std::string name = str.substr(start + 1, back);
-				start = str.find(":", end + 1);
-				end = str.find(",", end + 1);
-				back = (end - 2) - start + 1;
-                std::string producer = str.substr(start + 1, back);
-				start = str.find(":", end + 1);
-				end = str.find(",", end + 1);
-				back = (end - 2) - start + 1;
-                std::string coreStr = str.substr(start + 1, back);
-				int coreAmount = atof(coreStr.c_str());
-				start = str.find(":", end + 1);
-				end = str.find(",", end + 1);
-				back = (end - 2) - start + 1;
-                std::string freqStr = str.substr(start + 1, back);
-				float frequency = atof(freqStr.c_str());
+                VideoCard vc(name.toStdString(),pr.toStdString(),chipset.toStdString(),ram);
+                lineCounter++;
+                videoCards.push_back(vc);
+                continue;
+            }
+            pos = cpuRegex.indexIn(QString::fromStdString(str));
+            if(pos == 0){
+                QString name = cpuRegex.cap(1).trimmed();
+                QString pr = cpuRegex.cap(2).trimmed();
+                int coreAmount = cpuRegex.cap(3).toInt();
+                float freq = cpuRegex.cap(4).toFloat();
+                std::cout << name.toStdString() << "\n";
+                std::cout << pr.toStdString() << "\n";
+                std::cout << coreAmount << "\n";
+                std::cout <<  freq<< "\n";
 
-				Cpu cp(name, producer, frequency, coreAmount);
-				cpus.push_back(cp);
-				
-				continue;
-			}
-			position = str.find(motherStr);
-			if (position >= 0 && position < str.length())
-			{
-				int start = str.find(":");
-				int end = str.find(",");
-				int back = (end - 2) - start + 1;
-                std::string name = str.substr(start + 1, back);
-				start = str.find(":", end + 1);
-				end = str.find(",", end + 1);
-				back = (end - 2) - start + 1;
-                std::string producer = str.substr(start + 1, back);
-				start = str.find(":", end + 1);
-				end = str.find(",", end + 1);
-				back = (end - 2) - start + 1;
-                std::string ramType = str.substr(start + 1, back);
-				start = str.find(":", end + 1);
-				end = str.find(",", end + 1);
-				back = (end - 2) - start + 1;
-                std::string maxAmountStr = str.substr(start + 1, back);
-				int maxAmount = atof(maxAmountStr.c_str());
-
-				MotherBoard mother(name, producer, ramType, maxAmount);
-				mrBorads.push_back(mother);
-				continue;
-		
-			}
-			position = str.find(ramStr);
-			if (position >= 0 && position < str.length())
-			{
-				int start = str.find(":");
-				int end = str.find(",");
-				int back = (end - 2) - start + 1;
-                std::string name = str.substr(start + 1, back);
-				start = str.find(":",end + 1);
-				end = str.find(",", end + 1);
-                back = (end - 2) - start + 1;
-                std::string producer = str.substr(start + 1, back);
-				start = str.find(":", end + 1);
-				end = str.find(",", end + 1);
-				back = (end - 2) - start + 1;
-                std::string type = str.substr(start + 1, back);
-				start = str.find(":", end + 1);
-				end = str.find(",", end + 1);
-				back = (end - 2) - start + 1;
-                std::string freqStr = str.substr(start + 1, back);
-				float frequency = atof(freqStr.c_str());
-
-				Ram ram(name, producer, type, frequency);
-				rams.push_back(ram);
-				continue;
-			}
-		}
+                Cpu cpu(name.toStdString(),pr.toStdString(),coreAmount,freq);
+                lineCounter++;
+                cpus.push_back(cpu);
+                continue;
+            }
+            throw FileFormatException(QString::number(lineCounter));
+        }
 	}
 	myfile.close();
 
