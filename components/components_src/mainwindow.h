@@ -22,14 +22,20 @@ public:
     ~MainWindow();
 private slots:
     void updateProp(QModelIndex);
+    void updateProp2(QModelIndex);
     void removeItem();
     void showAddDlg();
+    void lineEditClicked();
     void loadFromFile();
     void saveToFile();
     void showEditDlg();
     void search(QString);
 
 private:
+    void findComponent(MotherBoard m);
+    void findComponent(VideoCard v);
+    void findComponent(Cpu cpu);
+    void findComponent(Ram rm);
     int celIndex;
     QString searchStr = "";
     std::vector<MotherBoard> mb;
@@ -38,6 +44,8 @@ private:
     std::vector<Ram> ram;
     QStandardItemModel *listModel;
     QStandardItemModel *listModel_3;
+    QStandardItemModel *listModel_2;
+    QStandardItemModel *listModel_4;
     Ui::MainWindow *ui;
     void initCompList();
 

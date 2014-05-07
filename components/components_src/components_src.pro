@@ -21,6 +21,7 @@ SOURCES += main.cpp\
     container/Writer.cpp \
     mainwindow.cpp \
     adddialog.cpp \
+    findcomponentdlg.cpp \
     exception/FileFormatException.cpp
 
 
@@ -39,9 +40,14 @@ HEADERS  += mainwindow.h \
     mainwindow.h \
     container/OATree.h \
     adddialog.h \
-    exception/FileFormatException.h \
-    exception/Exception.h
+    findcomponentdlg.h \
+    exception/exception.h \
+    exception/FileFormatException.h
 
 
 FORMS    += mainwindow.ui \
-    adddialog.ui
+    adddialog.ui \
+    findcomponentdlg.ui
+
+RESOURCES += \
+    resources/resources.qrc

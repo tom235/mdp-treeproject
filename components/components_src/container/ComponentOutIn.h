@@ -9,7 +9,7 @@
 #include "Ram.h"
 #include <stdlib.h>
 
-
+#include "QRegExp"
 #include <iostream>
 #include <fstream>
 #include"exception/FileFormatException.h"
@@ -17,7 +17,7 @@
 class ComponentOutIn
 {
 public:
-	
+
     static void writeComponents(std::vector<Ram> rams, std::vector<VideoCard> videoCards, std::vector<MotherBoard> mrBorads, std::vector<Cpu> cpus, const char* fileName);
     static void readComponents(std::vector<Ram>& rams, std::vector<VideoCard>& videoCards, std::vector<MotherBoard>& mrBorads, std::vector<Cpu>& cpus, const char* fileName) throw(FileFormatException) ;
 
@@ -25,20 +25,20 @@ public:
 
 void ComponentOutIn::readComponents(std::vector<Ram>& rams, std::vector<VideoCard>& videoCards, std::vector<MotherBoard>& mrBorads, std::vector<Cpu>& cpus,const char* fileName) throw(FileFormatException)
 {
-    QRegExp motherRegex("^\\S{17}(\\w+)\\S{10}(\\w+)\\S{9}(\\w+\\d+)\\S{17}(\\d+)");
-    QRegExp ramRegex("^\\S{9}(\\w+)\\S{10}(\\w+)\\S{6}(\\w+\\d{0,10})\\S{11}([0-9]*(\\.[0-9]+)?)");
-    QRegExp cpuRegex("^\\S{9}(\\w+)\\S{10}(\\w+)\\S{12}(\\d{0,2})\\S{11}([0-9]*(\\.[0-9]+)?)");
-    QRegExp vcRegex("^\\S{15}(\\w+)\\S{10}(\\w+)\\S{9}(\\w+)\\S{5}(\\d+)");
+    QRegExp motherRegex("MotherBoard\\[name:(\\w+|\\d+),producer:(\\w+|\\d+),ramType:(\\w+|\\d+),maxAmountMemory:(\\d+)\\]");
+    QRegExp ramRegex("RAM\\[name:(\\w+|\\d+),producer:(\\w+|\\d+),type:(\\w+|\\d+),frequence:([0-9]*(\\.[0-9]+)?)\\]");
+    QRegExp cpuRegex("CPU\\[name:(\\w+|\\d+),producer:(\\w+|\\d+),coreAmount:(\\d+),frequence:([0-9]*(\\.[0-9]+)?)\\]");
+    QRegExp vcRegex("VideoCard\\[name:(\\w+|\\d+),producer:(\\w+|\\d+),chipset:(\\w+),ram:(\\d+)\\]");
 
 
-	std::ifstream myfile(fileName);
+    std::ifstream myfile(fileName);
 
-	if (myfile.is_open())
-	{
+    if (myfile.is_open())
+    {
         std::string str;
         int lineCounter=0;
         while (std::getline(myfile,str))
-		{
+        {
             int pos = motherRegex.indexIn(QString::fromStdString(str));
             if(pos == 0){
                 QString name = motherRegex.cap(1).trimmed();
@@ -104,8 +104,8 @@ void ComponentOutIn::readComponents(std::vector<Ram>& rams, std::vector<VideoCar
             }
             throw FileFormatException(QString::number(lineCounter));
         }
-	}
-	myfile.close();
+    }
+    myfile.close();
 
 
 }
@@ -113,30 +113,30 @@ void ComponentOutIn::readComponents(std::vector<Ram>& rams, std::vector<VideoCar
 void ComponentOutIn::writeComponents(std::vector<Ram> rams, std::vector<VideoCard> videoCards, std::vector<MotherBoard> mrBorads, std::vector<Cpu> cpus,const char* fileName)
 {
 
-	std::ofstream out(fileName);
+    std::ofstream out(fileName);
 
-	for (int i = 0; i < rams.size(); i++)
-	{
-		//std::cout << rams[i] << std::endl;
-		out << rams[i] << std::endl;
+    for (int i = 0; i < rams.size(); i++)
+    {
+        //std::cout << rams[i] << std::endl;
+        out << rams[i] << std::endl;
 
-	}
-	for (int i = 0; i < videoCards.size(); i++)
-	{
-		//std::cout << videoCards[i] << std::endl;
-		out << videoCards[i] << std::endl;
-	}
-	for (int i = 0; i < mrBorads.size(); i++)
-	{
-		//std::cout << mrBorads[i] << std::endl;
-		out << mrBorads[i] << std::endl;
-	}
-	for (int i = 0; i < cpus.size(); i++)
-	{
-		//std::cout << cpus[i] << std::endl;
-		out << cpus[i] << std::endl;
-	}
-	out.close();
+    }
+    for (int i = 0; i < videoCards.size(); i++)
+    {
+        //std::cout << videoCards[i] << std::endl;
+        out << videoCards[i] << std::endl;
+    }
+    for (int i = 0; i < mrBorads.size(); i++)
+    {
+        //std::cout << mrBorads[i] << std::endl;
+        out << mrBorads[i] << std::endl;
+    }
+    for (int i = 0; i < cpus.size(); i++)
+    {
+        //std::cout << cpus[i] << std::endl;
+        out << cpus[i] << std::endl;
+    }
+    out.close();
 
 }
 
