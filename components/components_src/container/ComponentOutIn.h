@@ -25,10 +25,10 @@ public:
 
 void ComponentOutIn::readComponents(std::vector<Ram>& rams, std::vector<VideoCard>& videoCards, std::vector<MotherBoard>& mrBorads, std::vector<Cpu>& cpus,const char* fileName) throw(FileFormatException)
 {
-    QRegExp motherRegex("MotherBoard\\[name:(\\w+|\\d+),producer:(\\w+|\\d+),ramType:(\\w+|\\d+),maxAmountMemory:(\\d+)\\]");
-    QRegExp ramRegex("RAM\\[name:(\\w+|\\d+),producer:(\\w+|\\d+),type:(\\w+|\\d+),frequence:([0-9]*(\\.[0-9]+)?)\\]");
-    QRegExp cpuRegex("CPU\\[name:(\\w+|\\d+),producer:(\\w+|\\d+),coreAmount:(\\d+),frequence:([0-9]*(\\.[0-9]+)?)\\]");
-    QRegExp vcRegex("VideoCard\\[name:(\\w+|\\d+),producer:(\\w+|\\d+),chipset:(\\w+),ram:(\\d+)\\]");
+    QRegExp motherRegex("Материнская плата\\[название:(\\w+|\\d+),производитель:(\\w+|\\d+),тип памяти:(\\w+|\\d+),максимальный объем памяти:(\\d+)\\]");
+    QRegExp ramRegex("Оперативная память\\[название:(\\w+|\\d+),производитель:(\\w+|\\d+),тип:(\\w+|\\d+),частота:([0-9]*(\\.[0-9]+)?)\\]");
+    QRegExp cpuRegex("Процессор\\[название:(\\w+|\\d+),производитель:(\\w+|\\d+),Количество ядер:(\\d+),частота:([0-9]*(\\.[0-9]+)?)\\]");
+    QRegExp vcRegex("Видеокарта\\[название:(\\w+|\\d+),производитель:(\\w+|\\d+),чипсет:(\\w+),объем памяти:(\\d+)\\]");
 
 
     std::ifstream myfile(fileName);

@@ -7,6 +7,7 @@
 #include "QFileDialog"
 #include "exception/FileFormatException.h"
 #include "findcomponentdlg.h"
+#include "usermanualbrowser.h"
 #include "QMessageBox"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -18,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
    initCompList();
    setWindowIcon(QIcon(":/images/logo.png"));
    setWindowTitle("Комплектующие");
+   manual = new UserManualBrowser(":/docs", "index.htm");
    QObject::connect(ui->listView, SIGNAL(clicked(QModelIndex)),this, SLOT(updateProp(QModelIndex)));
    QObject::connect(ui->listView_2, SIGNAL(clicked(QModelIndex)),this, SLOT(updateProp2(QModelIndex)));
    QObject::connect(ui->pushButton_3, SIGNAL(clicked()),this, SLOT(removeItem()));
@@ -25,12 +27,14 @@ MainWindow::MainWindow(QWidget *parent) :
    QObject::connect(ui->pushButton_5, SIGNAL(clicked()),this, SLOT(saveToFile()));
    QObject::connect(ui->pushButton, SIGNAL(clicked()),this, SLOT(showAddDlg()));
    QObject::connect(ui->pushButton_2, SIGNAL(clicked()),this, SLOT(showEditDlg()));
+   QObject::connect(ui->pushButton_6, SIGNAL(clicked()),this, SLOT(help()));
    QObject::connect(ui->lineEdit, SIGNAL(textChanged(QString)),this, SLOT(search(QString)));
    QObject::connect(ui->lineEdit_3, SIGNAL(selectionChanged()),this, SLOT(lineEditClicked()));
    ui->listView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
    ui->listView_3->setEditTriggers(QAbstractItemView::NoEditTriggers);
    ui->listView_4->setEditTriggers(QAbstractItemView::NoEditTriggers);
    ui->listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
 }
 
 MainWindow::~MainWindow()
@@ -38,6 +42,12 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::help()
+{
+    manual->resize(400, 300);
+       manual->show();
+
+}
 
 void MainWindow::initCompList()
 {
@@ -84,40 +94,40 @@ void MainWindow::updateProp2(QModelIndex id)
     {
        if(QString::fromStdString(mb.at(i).getName())==itemStr)
        {
-           listModel_4->appendRow(new QStandardItem("Name: "+QString::fromStdString(mb.at(i).getName())));
-           listModel_4->appendRow(new QStandardItem("Producer: "+QString::fromStdString(mb.at(i).getProducer())));
-           listModel_4->appendRow(new QStandardItem("Ram type: "+QString::fromStdString(mb.at(i).getRamType())));
-           listModel_4->appendRow(new QStandardItem("MaxAmountMemory: "+QString::number(mb.at(i).getMaxAmountMemory())));
+           listModel_4->appendRow(new QStandardItem("Название: "+QString::fromStdString(mb.at(i).getName())));
+           listModel_4->appendRow(new QStandardItem("Производитель: "+QString::fromStdString(mb.at(i).getProducer())));
+           listModel_4->appendRow(new QStandardItem("Объем памяти type: "+QString::fromStdString(mb.at(i).getRamType())));
+           listModel_4->appendRow(new QStandardItem("Максимальный объем памяти: "+QString::number(mb.at(i).getMaxAmountMemory())));
        }
     }
     for(int i=0;i<cp.size();i++)
     {
        if(QString::fromStdString(cp.at(i).getName())==itemStr)
        {
-           listModel_4->appendRow(new QStandardItem("Name: "+QString::fromStdString(cp.at(i).getName())));
-           listModel_4->appendRow(new QStandardItem("Producer: "+QString::fromStdString(cp.at(i).getProducer())));
-           listModel_4->appendRow(new QStandardItem("Frequency: "+QString::number(cp.at(i).getFrequnce())));
-           listModel_4->appendRow(new QStandardItem("Core Amount: "+QString::number(cp.at(i).getCoreAmount())));
+           listModel_4->appendRow(new QStandardItem("Название: "+QString::fromStdString(cp.at(i).getName())));
+           listModel_4->appendRow(new QStandardItem("Производитель: "+QString::fromStdString(cp.at(i).getProducer())));
+           listModel_4->appendRow(new QStandardItem("Частота: "+QString::number(cp.at(i).getFrequnce())));
+           listModel_4->appendRow(new QStandardItem("Количество ядер: "+QString::number(cp.at(i).getCoreAmount())));
        }
     }
     for(int i=0;i<ram.size();i++)
     {
        if(QString::fromStdString(ram.at(i).getName())==itemStr)
        {
-           listModel_4->appendRow(new QStandardItem("Name: "+QString::fromStdString(ram.at(i).getName())));
-           listModel_4->appendRow(new QStandardItem("Producer: "+QString::fromStdString(ram.at(i).getProducer())));
-           listModel_4->appendRow(new QStandardItem("Frequency: "+QString::number(ram.at(i).getFrequnce())));
-           listModel_4->appendRow(new QStandardItem("Type: "+QString::fromStdString(ram.at(i).getType())));
+           listModel_4->appendRow(new QStandardItem("Название: "+QString::fromStdString(ram.at(i).getName())));
+           listModel_4->appendRow(new QStandardItem("Производитель: "+QString::fromStdString(ram.at(i).getProducer())));
+           listModel_4->appendRow(new QStandardItem("Частота: "+QString::number(ram.at(i).getFrequnce())));
+           listModel_4->appendRow(new QStandardItem("Тип: "+QString::fromStdString(ram.at(i).getType())));
        }
     }
     for(int i=0;i<vc.size();i++)
     {
        if(QString::fromStdString(vc.at(i).getName())==itemStr)
        {
-           listModel_4->appendRow(new QStandardItem("Name: "+QString::fromStdString(vc.at(i).getName())));
-           listModel_4->appendRow(new QStandardItem("Producer: "+QString::fromStdString(vc.at(i).getProducer())));
-           listModel_4->appendRow(new QStandardItem("Ram: "+QString::number(vc.at(i).getRam())));
-           listModel_4->appendRow(new QStandardItem("Chipset: "+QString::fromStdString(vc.at(i).getChipset())));
+           listModel_4->appendRow(new QStandardItem("Название: "+QString::fromStdString(vc.at(i).getName())));
+           listModel_4->appendRow(new QStandardItem("Производитель: "+QString::fromStdString(vc.at(i).getProducer())));
+           listModel_4->appendRow(new QStandardItem("Объем памяти: "+QString::number(vc.at(i).getRam())));
+           listModel_4->appendRow(new QStandardItem("Чипсет: "+QString::fromStdString(vc.at(i).getChipset())));
        }
     }
     ui->listView_4->setModel(listModel_4);
@@ -131,40 +141,40 @@ void MainWindow::updateProp(QModelIndex id)
     {
        if(QString::fromStdString(mb.at(i).getName())==itemStr)
        {
-           listModel_3->appendRow(new QStandardItem("Name: "+QString::fromStdString(mb.at(i).getName())));
-           listModel_3->appendRow(new QStandardItem("Producer: "+QString::fromStdString(mb.at(i).getProducer())));
-           listModel_3->appendRow(new QStandardItem("Ram type: "+QString::fromStdString(mb.at(i).getRamType())));
-           listModel_3->appendRow(new QStandardItem("MaxAmountMemory: "+QString::number(mb.at(i).getMaxAmountMemory())));
+           listModel_3->appendRow(new QStandardItem("Название: "+QString::fromStdString(mb.at(i).getName())));
+           listModel_3->appendRow(new QStandardItem("Производитель: "+QString::fromStdString(mb.at(i).getProducer())));
+           listModel_3->appendRow(new QStandardItem("Объем памяти type: "+QString::fromStdString(mb.at(i).getRamType())));
+           listModel_3->appendRow(new QStandardItem("Максимальный объем памяти: "+QString::number(mb.at(i).getMaxAmountMemory())));
        }
     }
     for(int i=0;i<cp.size();i++)
     {
        if(QString::fromStdString(cp.at(i).getName())==itemStr)
        {
-           listModel_3->appendRow(new QStandardItem("Name: "+QString::fromStdString(cp.at(i).getName())));
-           listModel_3->appendRow(new QStandardItem("Producer: "+QString::fromStdString(cp.at(i).getProducer())));
-           listModel_3->appendRow(new QStandardItem("Frequency: "+QString::number(cp.at(i).getFrequnce())));
-           listModel_3->appendRow(new QStandardItem("Core Amount: "+QString::number(cp.at(i).getCoreAmount())));
+           listModel_3->appendRow(new QStandardItem("Название: "+QString::fromStdString(cp.at(i).getName())));
+           listModel_3->appendRow(new QStandardItem("Производитель: "+QString::fromStdString(cp.at(i).getProducer())));
+           listModel_3->appendRow(new QStandardItem("Частота: "+QString::number(cp.at(i).getFrequnce())));
+           listModel_3->appendRow(new QStandardItem("Количество ядер: "+QString::number(cp.at(i).getCoreAmount())));
        }
     }
     for(int i=0;i<ram.size();i++)
     {
        if(QString::fromStdString(ram.at(i).getName())==itemStr)
        {
-           listModel_3->appendRow(new QStandardItem("Name: "+QString::fromStdString(ram.at(i).getName())));
-           listModel_3->appendRow(new QStandardItem("Producer: "+QString::fromStdString(ram.at(i).getProducer())));
-           listModel_3->appendRow(new QStandardItem("Frequency: "+QString::number(ram.at(i).getFrequnce())));
-           listModel_3->appendRow(new QStandardItem("Type: "+QString::fromStdString(ram.at(i).getType())));
+           listModel_3->appendRow(new QStandardItem("Название: "+QString::fromStdString(ram.at(i).getName())));
+           listModel_3->appendRow(new QStandardItem("Производитель: "+QString::fromStdString(ram.at(i).getProducer())));
+           listModel_3->appendRow(new QStandardItem("Частота: "+QString::number(ram.at(i).getFrequnce())));
+           listModel_3->appendRow(new QStandardItem("Тип: "+QString::fromStdString(ram.at(i).getType())));
        }
     }
     for(int i=0;i<vc.size();i++)
     {
        if(QString::fromStdString(vc.at(i).getName())==itemStr)
        {
-           listModel_3->appendRow(new QStandardItem("Name: "+QString::fromStdString(vc.at(i).getName())));
-           listModel_3->appendRow(new QStandardItem("Producer: "+QString::fromStdString(vc.at(i).getProducer())));
-           listModel_3->appendRow(new QStandardItem("Ram: "+QString::number(vc.at(i).getRam())));
-           listModel_3->appendRow(new QStandardItem("Chipset: "+QString::fromStdString(vc.at(i).getChipset())));
+           listModel_3->appendRow(new QStandardItem("Название: "+QString::fromStdString(vc.at(i).getName())));
+           listModel_3->appendRow(new QStandardItem("Производитель: "+QString::fromStdString(vc.at(i).getProducer())));
+           listModel_3->appendRow(new QStandardItem("Объем памяти: "+QString::number(vc.at(i).getRam())));
+           listModel_3->appendRow(new QStandardItem("Чипсет: "+QString::fromStdString(vc.at(i).getChipset())));
        }
     }
     ui->listView_3->setModel(listModel_3);

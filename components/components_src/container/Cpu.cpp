@@ -48,7 +48,7 @@ void Cpu::setProducer(std::string producer)
 
 std::ostream& operator<<(std::ostream& os, const Cpu& cp)
 {
-	os << "CPU[name:" << cp.name <<",producer:" << cp.producer << ",coreAmount:" << cp.coreAmount << ",frequence:" << cp.frequence << "]";
+    os << "Процессор[название:" << cp.name <<",производитель:" << cp.producer << ",количество ядер:" << cp.coreAmount << ",частота:" << cp.frequence << "]";
 	return os;
 }
 

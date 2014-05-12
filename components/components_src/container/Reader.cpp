@@ -29,7 +29,7 @@ OATree<string>* Reader::readTree(char* fileName){
                 list = new List<OATree<string> >();
 				tree = new OATree<string>(typeName,false, list);
 			
-				cout << "typeName-" << typeName << endl;
+				cout << "ТипName-" << typeName << endl;
 				continue;
 			}
 			position = str.find(propertyOr);

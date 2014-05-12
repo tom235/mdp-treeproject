@@ -49,7 +49,7 @@ void VideoCard::setRam(int ram)
 
 std::ostream& operator<<(std::ostream& os, const VideoCard& vc)
 {
-	os << "VideoCard[name:" << vc.name << ",producer:" << vc.producer << ",chipset:" << vc.chipset<< ",ram:" << vc.ram << "]";
+    os << "Видеокарта[название:" << vc.name << ",производитель:" << vc.producer << ",чипсет:" << vc.chipset<< ",объем памяти:" << vc.ram << "]";
 	return os;
 }
 

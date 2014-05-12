@@ -37,31 +37,31 @@ void FindComponentDlg::selectItem(QString str)
     listModel->clear();
     if(str=="Материнская плата")
     {
-        listModel->appendRow(new QStandardItem("Name"));
-        listModel->appendRow(new QStandardItem("Producer"));
-        listModel->appendRow(new QStandardItem("RamType"));
-        listModel->appendRow(new QStandardItem("maxAmountMemory"));
+        listModel->appendRow(new QStandardItem("Название"));
+        listModel->appendRow(new QStandardItem("Производитель"));
+        listModel->appendRow(new QStandardItem("Тип памяти"));
+        listModel->appendRow(new QStandardItem("Максимальный объем памяти"));
     }
     else if(str=="Видеокарта")
     {
-        listModel->appendRow(new QStandardItem("Name"));
-        listModel->appendRow(new QStandardItem("Producer"));
-        listModel->appendRow(new QStandardItem("Chipset"));
-        listModel->appendRow(new QStandardItem("Ram"));
+        listModel->appendRow(new QStandardItem("Название"));
+        listModel->appendRow(new QStandardItem("Производитель"));
+        listModel->appendRow(new QStandardItem("Чипсет"));
+        listModel->appendRow(new QStandardItem("Объем памяти"));
     }
     else if(str=="Оперативная память")
     {
-        listModel->appendRow(new QStandardItem("Name"));
-        listModel->appendRow(new QStandardItem("Producer"));
-        listModel->appendRow(new QStandardItem("Type"));
-        listModel->appendRow(new QStandardItem("Frequency"));
+        listModel->appendRow(new QStandardItem("Название"));
+        listModel->appendRow(new QStandardItem("Производитель"));
+        listModel->appendRow(new QStandardItem("Тип"));
+        listModel->appendRow(new QStandardItem("Частота"));
     }
     else
     {
-        listModel->appendRow(new QStandardItem("Name"));
-        listModel->appendRow(new QStandardItem("Producer"));
-        listModel->appendRow(new QStandardItem("Frequency"));
-        listModel->appendRow(new QStandardItem("CoreAmount"));
+        listModel->appendRow(new QStandardItem("Название"));
+        listModel->appendRow(new QStandardItem("Производитель"));
+        listModel->appendRow(new QStandardItem("Частота"));
+        listModel->appendRow(new QStandardItem("Количество ядер"));
     }
     ui->listView->setModel(listModel);
 }
@@ -69,39 +69,39 @@ void FindComponentDlg::selectProp(QModelIndex index)
 {
     QString lineEditText = "";
     ui->lineEdit->setEnabled(true);
-    if(listModel->item(index.row(),0)->text()=="Name")
+    if(listModel->item(index.row(),0)->text()=="Название")
     {
         lineEditText = name;
     }
-    else if(listModel->item(index.row(),0)->text()=="Producer")
+    else if(listModel->item(index.row(),0)->text()=="Производитель")
     {
         lineEditText = producer;
     }
-    else if(listModel->item(index.row(),0)->text()=="Type")
+    else if(listModel->item(index.row(),0)->text()=="Тип")
     {
         lineEditText = type;
     }
-    else if(listModel->item(index.row(),0)->text()=="RamType")
+    else if(listModel->item(index.row(),0)->text()=="Тип памяти")
     {
         lineEditText = ramType;
     }
-    else if(listModel->item(index.row(),0)->text()=="Chipset")
+    else if(listModel->item(index.row(),0)->text()=="Чипсет")
     {
         lineEditText = chipset;
     }
-    else if(listModel->item(index.row(),0)->text()=="CoreAmount")
+    else if(listModel->item(index.row(),0)->text()=="Количество ядер")
     {
         lineEditText = QString::number(coreAmount);
     }
-    else if(listModel->item(index.row(),0)->text()=="maxAmountMemory")
+    else if(listModel->item(index.row(),0)->text()=="Максимальный объем памяти")
     {
         lineEditText = QString::number(maxAmountMemory);
     }
-    else if(listModel->item(index.row(),0)->text()=="Frequency")
+    else if(listModel->item(index.row(),0)->text()=="Частота")
     {
         lineEditText = QString::number(frequency);
     }
-    else if(listModel->item(index.row(),0)->text()=="Ram")
+    else if(listModel->item(index.row(),0)->text()=="Объем памяти")
     {
         lineEditText = QString::number(ram);
     }
@@ -114,48 +114,48 @@ void FindComponentDlg::setVariables(QString str)
 
     foreach(const QModelIndex &index, list){
         QString varStr = index.data(Qt::DisplayRole ).toString();
-        if(varStr=="Name")
+        if(varStr=="Название")
         {
 
             name = str;
         }
-        else if(varStr=="Producer")
+        else if(varStr=="Производитель")
         {
             producer = str;
         }
-        else if(varStr=="Frequency")
+        else if(varStr=="Частота")
         {
             if(QRegExp("[-+]?[0-9]*\.?[0-9]+").indexIn(str)==-1)
                 QMessageBox::warning(this,"Ошибка","Ожидается числовое значение");
             frequency = str.toFloat();
         }
-        else if(varStr=="CoreAmount")
+        else if(varStr=="Количество ядер")
         {
             if(QRegExp("[-+]?\\d+").indexIn(str)==-1)
                 QMessageBox::warning(this,"Ошибка","Ожидается числовое значение");
             coreAmount = str.toInt();
         }
-        else if(varStr=="Type")
+        else if(varStr=="Тип")
         {
             type = str;
         }
-        else if(varStr=="maxAmountMemory")
+        else if(varStr=="Максимальный объем памяти")
         {
             if(QRegExp("[-+]?\\d+").indexIn(str)==-1)
                 QMessageBox::warning(this,"Ошибка","Ожидается числовое значение");
             maxAmountMemory = str.toInt();
         }
-        else if(varStr=="RamType")
+        else if(varStr=="Тип памяти")
         {
             ramType = str;
         }
-        else if(varStr=="Ram")
+        else if(varStr=="Объем памяти")
         {
             if(QRegExp("[-+]?\\d+").indexIn(str)==-1)
                 QMessageBox::warning(this,"Ошибка","Ожидается числовое значение");
             ram = str.toInt();
         }
-        else if(varStr=="Chipset")
+        else if(varStr=="Чипсет")
         {
             chipset = str;
         }

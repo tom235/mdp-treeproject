@@ -7,6 +7,7 @@
 #include "container/Ram.h"
 #include "container/Cpu.h"
 #include "container/VideoCard.h"
+#include "usermanualbrowser.h"
 #include <vector>
 namespace Ui {
 class MainWindow;
@@ -30,6 +31,7 @@ private slots:
     void saveToFile();
     void showEditDlg();
     void search(QString);
+    void help();
 
 private:
     void findComponent(MotherBoard m);
@@ -42,6 +44,7 @@ private:
     std::vector<VideoCard> vc;
     std::vector<Cpu> cp;
     std::vector<Ram> ram;
+    UserManualBrowser *manual;
     QStandardItemModel *listModel;
     QStandardItemModel *listModel_3;
     QStandardItemModel *listModel_2;

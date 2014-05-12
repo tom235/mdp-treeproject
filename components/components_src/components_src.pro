@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     mainwindow.cpp \
     adddialog.cpp \
     findcomponentdlg.cpp \
-    exception/FileFormatException.cpp
+    exception/FileFormatException.cpp \
+    usermanualbrowser.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -42,7 +43,8 @@ HEADERS  += mainwindow.h \
     adddialog.h \
     findcomponentdlg.h \
     exception/exception.h \
-    exception/FileFormatException.h
+    exception/FileFormatException.h \
+    usermanualbrowser.h
 
 
 FORMS    += mainwindow.ui \

@@ -47,7 +47,7 @@ void MotherBoard::setRamType(std::string ramType)
 
 std::ostream& operator<<(std::ostream& os, const MotherBoard& mb)
 {
-    os << "MotherBoard[name:" << mb.name << ",producer:" << mb.producer << ",ramType:" << mb.ramType << ",maxAmountMemory:" << mb.maxAmountMemory << "]";
+    os << "Материнская плата[название:" << mb.name << ",производитель:" << mb.producer << ",тип памяти:" << mb.ramType << ",максимальный объем памяти:" << mb.maxAmountMemory << "]";
 	return os;
 }
 

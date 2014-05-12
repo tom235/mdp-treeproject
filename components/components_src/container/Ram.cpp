@@ -27,7 +27,7 @@ void Ram::setFrequnce(float frequence){ this->frequence = frequence; }
 
 std::ostream& operator<<(std::ostream& os, const Ram& ram)
 {
-	os << "RAM[name:" << ram.name << ",producer:" << ram.producer << ",type:" << ram.type<< ",frequence:" << ram.frequence << "]";
+    os << "Оперативная память[название:" << ram.name << ",производитель:" << ram.producer << ",тип:" << ram.type<< ",частота:" << ram.frequence << "]";
 	return os;
 }
 
